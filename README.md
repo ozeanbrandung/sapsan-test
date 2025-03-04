@@ -1,3 +1,30 @@
+# sapsan-test
+
+**Чтобы начать работу с проектом, необходимо создать файл .env.local и задать занчения переменным окружения, перечисленным в .env**
+
+Запуск проекта: 
+- npm i
+- npm run dev
+
+DONE: 
+- fetch unsplash photos on search 
+- add tanstack query 
+- add unsplash service 
+
+TODO: 
+- add prettier
+- add search debounce
+- add HeadlessUI + Tailwind for ui-kit 
+- add mobile styles 
+- add desktop styles 
+- add lazy loading for photos (make sure there is no jumping on page)
+- add infinite scroll 
+- add virtualized list 
+- add modals (with react-router-dom?)
+- refactor
+- test 
+- deploy
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
@@ -52,4 +79,3 @@ export default tseslint.config({
   },
 })
 ```
-# sapsan-test
