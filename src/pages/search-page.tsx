@@ -1,7 +1,9 @@
 import { ChangeEvent, ReactNode, useState } from "react";
 //TODO: absolute imports
+//TODO: imports order
 import UnsplashService from "../services/unsplash-service";
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { Gallery } from "../modules/gallery";
 
 const unsplashServie = new UnsplashService();
 
@@ -13,30 +15,45 @@ export function SearchPage(): ReactNode {
     setSearchValue(e.target.value);
   }
 
-  const query = useQuery({
-    queryKey: ["search", searchValue],
-    queryFn: () => unsplashServie.searchPhotos(searchValue),
+  const {
+    status,
+    data,
+    error,
+    isFetching,
+    isFetchingNextPage,
+    fetchNextPage,
+    hasNextPage,
+  } = useInfiniteQuery({
+    queryKey: ["photos", searchValue],
+    queryFn: (ctx) => unsplashServie.searchPhotos(searchValue, ctx.pageParam),
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = allPages.length + 1;
+      return nextPage <= lastPage.total_pages ? nextPage : undefined;
+    },
+    select: (data) => {
+      // Преобразуем данные для удобства использования
+      return {
+        photos: data.pages.map((page) => page.results),
+      };
+    },
+    initialPageParam: 1,
   });
 
-  console.log(query.data);
+  console.log("data", data);
 
-  const isResultEmpty = !query.data?.results.length;
+  const photos = data ? data.photos.flatMap((d) => d) : [];
 
-  //TODO: check semantic 
+  //TODO: check semantic
   return (
     <section>
       <input value={searchValue} onChange={handleInputChange} />
 
-      <section>
-        {isResultEmpty && <div>Нет результатов</div>}
-
-        {!isResultEmpty &&
-          query.data?.results.map((photo) => (
-            <div key={photo.id}>
-              <img src={photo.urls.thumb} alt={photo.alt_description} />
-            </div>
-          ))}
-      </section>
+      <Gallery
+        photos={photos}
+        hasNextPage={hasNextPage}
+        isFetchingNextPage={isFetchingNextPage}
+        fetchNextPage={fetchNextPage}
+      />
     </section>
   );
 }

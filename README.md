@@ -21,8 +21,9 @@ TODO:
 - add infinite scroll 
 - add virtualized list 
 - add modals (with react-router-dom?)
-- refactor
+- refactor (+ check todos at code)
 - test 
+- check accessibility 
 - deploy
 
 # React + TypeScript + Vite

@@ -1,20 +1,23 @@
+//TODO: move to separate file?
 interface IUnsplashError {
   errors: string[];
+}
+
+export interface IPhoto {
+  id: string;
+  alt_description: string;
+  urls: {
+    regular: string;
+    full: string;
+    small: string;
+    thumb: string;
+  };
 }
 
 interface IUnsplashSearchResult {
   total: number;
   total_pages: number;
-  results: {
-    id: string;
-    alt_description: string;
-    urls: {
-      regular: string;
-      full: string;
-      small: string;
-      thumb: string;
-    };
-  }[];
+  results: IPhoto[];
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -29,7 +32,10 @@ class UnsplashService {
     this.baseUrl = "https://api.unsplash.com";
   }
 
-  private async fetchFromUnsplash(url: string, params = {}):Promise<IUnsplashSearchResult> {
+  private async fetchFromUnsplash(
+    url: string,
+    params = {}
+  ): Promise<IUnsplashSearchResult> {
     const queryParams = new URLSearchParams(params).toString();
     const fullUrl = `${this.baseUrl}${url}?${queryParams}`;
     //   const headers = {
@@ -42,7 +48,7 @@ class UnsplashService {
         throw new Error(`Ошибка при запросе к API: ${response.status}`);
       }
       return await response.json();
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (isErrorUnsplashError(error)) {
         console.error("Ошибка при работе с API Unsplash:", error.errors);
@@ -69,4 +75,5 @@ class UnsplashService {
   }
 }
 
+//TODO: export instance
 export default UnsplashService;
