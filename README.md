@@ -13,7 +13,6 @@ DONE:
 
 TODO: 
 - add prettier
-- add search debounce
 - add HeadlessUI + Tailwind for ui-kit 
 - add mobile styles 
 - add desktop styles 

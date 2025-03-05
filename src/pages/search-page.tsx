@@ -4,6 +4,8 @@ import { ChangeEvent, ReactNode, useState } from "react";
 import UnsplashService from "../services/unsplash-service";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { Gallery } from "../modules/gallery";
+import { SearchGroup } from "../modules/search-group";
+import clsx from "clsx";
 
 const unsplashServie = new UnsplashService();
 
@@ -23,8 +25,9 @@ export function SearchPage(): ReactNode {
     isFetchingNextPage,
     fetchNextPage,
     hasNextPage,
+    refetch,
   } = useInfiniteQuery({
-    queryKey: ["photos", searchValue],
+    queryKey: ["photos" /*, searchValue*/],
     queryFn: (ctx) => unsplashServie.searchPhotos(searchValue, ctx.pageParam),
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = allPages.length + 1;
@@ -37,23 +40,55 @@ export function SearchPage(): ReactNode {
       };
     },
     initialPageParam: 1,
+    //enabled: !!searchValue,
   });
 
-  console.log("data", data);
+  function handleSearchBtnClick() {
+    refetch();
+  }
+
+  function clearSearchValue() {
+    setSearchValue("");
+    //refetch();
+  }
+
+  //console.log("data", data);
 
   const photos = data ? data.photos.flatMap((d) => d) : [];
 
   //TODO: check semantic
   return (
     <section>
-      <input value={searchValue} onChange={handleInputChange} />
-
-      <Gallery
-        photos={photos}
-        hasNextPage={hasNextPage}
-        isFetchingNextPage={isFetchingNextPage}
-        fetchNextPage={fetchNextPage}
+      <SearchGroup
+        className={clsx(
+          "transition duration-300 ease pb-[16px] pt-[10px] sticky top-0 bg-white z-1",
+          {
+            "translate-y-[232px]": !photos.length && !searchValue,
+            "translate-y-0": !!photos.length && searchValue,
+          }
+        )}
+        searchValue={searchValue}
+        handleInputChange={handleInputChange}
+        handleSearchBtnClick={handleSearchBtnClick}
+        clearSearchValue={clearSearchValue}
       />
+
+      {!!photos.length && searchValue && (
+        <Gallery
+          photos={photos}
+          hasNextPage={hasNextPage}
+          isFetchingNextPage={isFetchingNextPage}
+          fetchNextPage={fetchNextPage}
+        />
+      )}
+
+      {!photos.length && searchValue && (
+        <div className="py-[40px]">
+          <p className="font-[18px] text-(--color-dark-grey)">
+            К сожалению, поиск не дал результатов
+          </p>
+        </div>
+      )}
     </section>
   );
 }
