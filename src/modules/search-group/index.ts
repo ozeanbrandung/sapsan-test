@@ -1,1 +1,1 @@
-export {SearchGroup} from './search-group';
+export { SearchGroup } from './search-group';

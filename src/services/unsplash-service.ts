@@ -22,20 +22,17 @@ interface IUnsplashSearchResult {
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function isErrorUnsplashError(error: any): error is IUnsplashError {
-  return "errors" in error;
+  return 'errors' in error;
 }
 
 class UnsplashService {
   private baseUrl: string;
   private client_id: string = import.meta.env.VITE_UNSPLASH_CLIENT_ID;
   constructor() {
-    this.baseUrl = "https://api.unsplash.com";
+    this.baseUrl = 'https://api.unsplash.com';
   }
 
-  private async fetchFromUnsplash(
-    url: string,
-    params = {}
-  ): Promise<IUnsplashSearchResult> {
+  private async fetchFromUnsplash(url: string, params = {}): Promise<IUnsplashSearchResult> {
     const queryParams = new URLSearchParams(params).toString();
     const fullUrl = `${this.baseUrl}${url}?${queryParams}`;
     //   const headers = {
@@ -51,9 +48,9 @@ class UnsplashService {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       if (isErrorUnsplashError(error)) {
-        console.error("Ошибка при работе с API Unsplash:", error.errors);
+        console.error('Ошибка при работе с API Unsplash:', error.errors);
       } else {
-        console.error("Unknown error:", error);
+        console.error('Unknown error:', error);
       }
       throw error;
     }
@@ -61,7 +58,7 @@ class UnsplashService {
 
   async searchPhotos(query: string, page = 1 /*, perPage = 10*/) {
     if (!query) {
-      throw new Error("Поисковый запрос не может быть пустым");
+      throw new Error('Поисковый запрос не может быть пустым');
     }
 
     const params = {
@@ -71,7 +68,7 @@ class UnsplashService {
       //per_page: perPage
     };
 
-    return this.fetchFromUnsplash("/search/photos", params);
+    return this.fetchFromUnsplash('/search/photos', params);
   }
 }
 

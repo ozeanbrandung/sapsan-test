@@ -1,6 +1,6 @@
-import { useWindowVirtualizer } from "@tanstack/react-virtual";
-import { useEffect, useRef } from "react";
-import { IPhoto } from "../../services/unsplash-service";
+import { useWindowVirtualizer } from '@tanstack/react-virtual';
+import { useEffect, useRef } from 'react';
+import { IPhoto } from '../../services/unsplash-service';
 
 interface IGalleryProps {
   photos: IPhoto[];
@@ -9,12 +9,7 @@ interface IGalleryProps {
   fetchNextPage: () => void;
 }
 
-export function Gallery({
-  photos,
-  hasNextPage,
-  isFetchingNextPage,
-  fetchNextPage,
-}: IGalleryProps) {
+export function Gallery({ photos, hasNextPage, isFetchingNextPage, fetchNextPage }: IGalleryProps) {
   const parentRef = useRef<HTMLDivElement | null>(null);
 
   const virtualizer = useWindowVirtualizer({
@@ -31,28 +26,18 @@ export function Gallery({
       return;
     }
 
-    if (
-      lastItem.index >= photos.length - 1 &&
-      hasNextPage &&
-      !isFetchingNextPage
-    ) {
+    if (lastItem.index >= photos.length - 1 && hasNextPage && !isFetchingNextPage) {
       fetchNextPage();
     }
-  }, [
-    hasNextPage,
-    fetchNextPage,
-    photos.length,
-    isFetchingNextPage,
-    virtualizer.getVirtualItems(),
-  ]);
+  }, [hasNextPage, fetchNextPage, photos.length, isFetchingNextPage, virtualizer.getVirtualItems()]);
 
   return (
     <section ref={parentRef}>
       <div
         style={{
           height: `${virtualizer.getTotalSize()}px`,
-          width: "100%",
-          position: "relative",
+          width: '100%',
+          position: 'relative',
         }}
       >
         {virtualizer.getVirtualItems().map((item) => {
@@ -65,11 +50,11 @@ export function Gallery({
             <div
               key={item.key}
               style={{
-                position: "absolute",
+                position: 'absolute',
                 //top: 0,
                 //left: 0,
-                width: "200px",
-                height: "200px",
+                width: '200px',
+                height: '200px',
                 //height: `${item.size}px`,
                 transform: `translateY(${item.start}px)`,
               }}
@@ -79,13 +64,13 @@ export function Gallery({
                   src={photo.urls.thumb}
                   alt={photo.alt_description}
                   style={{
-                    width: "200px",
-                    height: "200px",
-                    objectFit: "cover",
+                    width: '200px',
+                    height: '200px',
+                    objectFit: 'cover',
                   }}
                 />
               </div>
-              {isLoaderRow && hasNextPage && "Loading..."}
+              {isLoaderRow && hasNextPage && 'Loading...'}
             </div>
           );
         })}

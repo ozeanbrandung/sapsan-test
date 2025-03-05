@@ -1,6 +1,6 @@
-import { ReactNode } from "react";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { SearchPage } from "./pages/search-page";
+import { ReactNode } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { SearchPage } from './pages/search-page';
 
 const queryClient = new QueryClient();
 

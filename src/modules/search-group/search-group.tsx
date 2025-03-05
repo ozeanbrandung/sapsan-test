@@ -1,7 +1,7 @@
-import { ReactNode } from "react";
-import { UIButton } from "../../ui";
-import clsx from "clsx";
-import { SearchInput } from "./ui";
+import { ReactNode } from 'react';
+import { UIButton } from '../../ui';
+import clsx from 'clsx';
+import { SearchInput } from './ui';
 
 interface ISearchGroupProps {
   searchValue: string;
@@ -11,12 +11,9 @@ interface ISearchGroupProps {
   clearSearchValue: () => void;
 }
 export function SearchGroup(props: ISearchGroupProps): ReactNode {
-  const { searchValue, handleInputChange, handleSearchBtnClick, clearSearchValue, className } =
-    props;
+  const { searchValue, handleInputChange, handleSearchBtnClick, clearSearchValue, className } = props;
   return (
-    <form
-      className={clsx("flex justify-center items-center gap-[8px]", className)}
-    >
+    <form className={clsx('flex justify-center items-center gap-[8px]', className)}>
       {/*TODO: move to json */}
       <SearchInput
         name="search"
