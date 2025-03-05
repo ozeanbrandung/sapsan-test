@@ -6,6 +6,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { Gallery } from '../modules/gallery';
 import { SearchGroup } from '../modules/search-group';
 import clsx from 'clsx';
+import { UILayout } from '../ui';
 
 const unsplashServie = new UnsplashService();
 
@@ -51,7 +52,7 @@ export function SearchPage(): ReactNode {
 
   //TODO: check semantic
   return (
-    <section>
+    <>
       <SearchGroup
         className={clsx('transition duration-300 ease pb-[16px] pt-[10px] sticky top-0 bg-white z-1', {
           'translate-y-[232px]': !photos.length && !searchValue,
@@ -73,10 +74,10 @@ export function SearchPage(): ReactNode {
       )}
 
       {!photos.length && searchValue && (
-        <div className="py-[40px]">
+        <UILayout className="py-[40px]">
           <p className="font-[18px] text-(--color-dark-grey)">К сожалению, поиск не дал результатов</p>
-        </div>
+        </UILayout>
       )}
-    </section>
+    </>
   );
 }

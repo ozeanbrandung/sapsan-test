@@ -10,15 +10,17 @@ DONE:
 - fetch unsplash photos on search 
 - add tanstack query 
 - add unsplash service 
-
-TODO: 
 - add prettier
 - add HeadlessUI + Tailwind for ui-kit 
+- add infinite scroll 
+- add virtualized list 
+
+TODO: 
 - add mobile styles 
 - add desktop styles 
 - add lazy loading for photos (make sure there is no jumping on page)
-- add infinite scroll 
-- add virtualized list 
+- fix issues with tanstack queries: don't query without button click, reset fetched data when search input cleared
+- handle enter down
 - add modals (with react-router-dom?)
 - refactor (+ check todos at code)
 - test 

@@ -7,7 +7,7 @@ const queryClient = new QueryClient();
 function App(): ReactNode {
   return (
     <QueryClientProvider client={queryClient}>
-      <main className="min-h-screen px-[16px]">
+      <main className="min-h-screen">
         <SearchPage />
       </main>
     </QueryClientProvider>

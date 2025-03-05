@@ -2,6 +2,7 @@ import { ReactNode } from 'react';
 import { UIButton } from '../../ui';
 import clsx from 'clsx';
 import { SearchInput } from './ui';
+import { UILayout } from '../../ui/ui-layout/ui-layout';
 
 interface ISearchGroupProps {
   searchValue: string;
@@ -13,7 +14,7 @@ interface ISearchGroupProps {
 export function SearchGroup(props: ISearchGroupProps): ReactNode {
   const { searchValue, handleInputChange, handleSearchBtnClick, clearSearchValue, className } = props;
   return (
-    <form className={clsx('flex justify-center items-center gap-[8px]', className)}>
+    <UILayout className={clsx('flex justify-center items-center gap-[8px]', className)} tag="form">
       {/*TODO: move to json */}
       <SearchInput
         name="search"
@@ -25,6 +26,6 @@ export function SearchGroup(props: ISearchGroupProps): ReactNode {
       />
       {/*TODO: move to json */}
       <UIButton onClick={handleSearchBtnClick}>Искать</UIButton>
-    </form>
+    </UILayout>
   );
 }

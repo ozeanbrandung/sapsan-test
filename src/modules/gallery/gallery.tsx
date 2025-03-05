@@ -1,6 +1,7 @@
 import { useWindowVirtualizer } from '@tanstack/react-virtual';
 import { useEffect, useRef } from 'react';
 import { IPhoto } from '../../services/unsplash-service';
+import { UILayout } from '../../ui/ui-layout/ui-layout';
 
 interface IGalleryProps {
   photos: IPhoto[];
@@ -14,9 +15,10 @@ export function Gallery({ photos, hasNextPage, isFetchingNextPage, fetchNextPage
 
   const virtualizer = useWindowVirtualizer({
     count: hasNextPage ? photos.length + 1 : photos.length,
-    estimateSize: () => 200, // Приблизительная высота элемента
+    estimateSize: () => 114, // Приблизительная высота элемента
     overscan: 5, // Количество дополнительных элементов для рендера
     gap: 10,
+    lanes: 3,
   });
 
   useEffect(() => {
@@ -32,49 +34,39 @@ export function Gallery({ photos, hasNextPage, isFetchingNextPage, fetchNextPage
   }, [hasNextPage, fetchNextPage, photos.length, isFetchingNextPage, virtualizer.getVirtualItems()]);
 
   return (
-    <section ref={parentRef}>
+    <UILayout tag="section" ref={parentRef}>
       <div
+        className="relative w-full"
         style={{
           height: `${virtualizer.getTotalSize()}px`,
-          width: '100%',
-          position: 'relative',
+          //width: '100%',
+          //position: '',
         }}
       >
         {virtualizer.getVirtualItems().map((item) => {
           const isLoaderRow = item.index > photos.length - 1;
           const photo = photos[item.index];
 
+          console.log(item);
+
           if (!photo) return null;
 
           return (
             <div
               key={item.key}
+              className="absolute w-[114px] h-[114px]"
               style={{
-                position: 'absolute',
-                //top: 0,
-                //left: 0,
-                width: '200px',
-                height: '200px',
-                //height: `${item.size}px`,
-                transform: `translateY(${item.start}px)`,
+                transform: `translateY(${item.start}px) translateX(${item.lane * 114 + 10 * item.lane}px)`,
               }}
             >
-              <div key={photo.id}>
-                <img
-                  src={photo.urls.thumb}
-                  alt={photo.alt_description}
-                  style={{
-                    width: '200px',
-                    height: '200px',
-                    objectFit: 'cover',
-                  }}
-                />
-              </div>
+              {/* <div key={photo.id} className='w-[114px] h-[114px]'> */}
+              <img className="w-full h-full object-cover" src={photo.urls.thumb} alt={photo.alt_description} />
+              {/* </div> */}
               {isLoaderRow && hasNextPage && 'Loading...'}
             </div>
           );
         })}
       </div>
-    </section>
+    </UILayout>
   );
 }
