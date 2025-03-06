@@ -6,7 +6,7 @@ import { useInfiniteQuery } from '@tanstack/react-query';
 import { Gallery } from '../modules/gallery';
 import { SearchGroup } from '../modules/search-group';
 import clsx from 'clsx';
-import { UILayout } from '../ui';
+import { UIDialog, UILayout } from '../ui';
 
 const unsplashServie = new UnsplashService();
 
@@ -46,38 +46,68 @@ export function SearchPage(): ReactNode {
     //refetch();
   }
 
+  const [chosenPhotoUrl, setChosenPhotoUrl] = useState('');
+
+  function handlePhotoClick(url: string) {
+    setChosenPhotoUrl(url);
+  }
+
   //console.log("data", data);
 
+  console.log('search', searchValue);
+
   const photos = data ? data.photos.flatMap((d) => d) : [];
+
+  const isNothingFound = !photos.length && searchValue;
+  const isSomethingFound = !!photos.length && searchValue;
 
   //TODO: check semantic
   return (
     <>
-      <SearchGroup
+      <div
         className={clsx('transition duration-300 ease pb-[16px] pt-[10px] sticky top-0 bg-white z-1', {
-          'translate-y-[232px]': !photos.length && !searchValue,
-          'translate-y-0': !!photos.length && searchValue,
+          'translate-y-[232px]': !searchValue,
+          'translate-y-0': isSomethingFound || isNothingFound,
         })}
-        searchValue={searchValue}
-        handleInputChange={handleInputChange}
-        handleSearchBtnClick={handleSearchBtnClick}
-        clearSearchValue={clearSearchValue}
-      />
-
-      {!!photos.length && searchValue && (
-        <Gallery
-          photos={photos}
-          hasNextPage={hasNextPage}
-          isFetchingNextPage={isFetchingNextPage}
-          fetchNextPage={fetchNextPage}
-        />
-      )}
-
-      {!photos.length && searchValue && (
-        <UILayout className="py-[40px]">
-          <p className="font-[18px] text-(--color-dark-grey)">К сожалению, поиск не дал результатов</p>
+      >
+        <UILayout>
+          <SearchGroup
+            className={clsx('transition duration-300 ease relative', {
+              'translate-x-[-50%] left-[50%]': true,
+              //TODO: animation
+              //'translate-x-[-50%] left-[50%]': !searchValue,
+              //' translate-x-[0%] left-[0%]': isSomethingFound || isNothingFound,
+            })}
+            searchValue={searchValue}
+            handleInputChange={handleInputChange}
+            handleSearchBtnClick={handleSearchBtnClick}
+            clearSearchValue={clearSearchValue}
+          />
         </UILayout>
-      )}
+      </div>
+
+      <UILayout className={clsx({ 'py-[40px]': isNothingFound })} tag="section">
+        {isSomethingFound && (
+          <>
+            <Gallery
+              photos={photos}
+              hasNextPage={hasNextPage}
+              isFetchingNextPage={isFetchingNextPage}
+              fetchNextPage={fetchNextPage}
+              handlePhotoClick={handlePhotoClick}
+            />
+            <UIDialog isOpen={!!chosenPhotoUrl} handleClose={() => handlePhotoClick('')}>
+              <div>
+                <img src={chosenPhotoUrl} alt="chosen" />
+              </div>
+            </UIDialog>
+          </>
+        )}
+
+        {isNothingFound && (
+          <p className="font-[18px] text-(--color-dark-grey)">К сожалению, поиск не дал результатов</p>
+        )}
+      </UILayout>
     </>
   );
 }

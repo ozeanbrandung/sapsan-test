@@ -12,7 +12,11 @@ export function UILayout(props: IUILayoutProps): ReactNode {
   const Tag = tag;
 
   return (
-    <Tag ref={ref} className={clsx('px-[16px]', className)} {...rest}>
+    <Tag
+      ref={ref}
+      className={clsx('px-[16px] lg:px-[0px] sm:max-w-[390px] lg:max-w-[1265px] m-auto', className)}
+      {...rest}
+    >
       {children}
     </Tag>
   );
