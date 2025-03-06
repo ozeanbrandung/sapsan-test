@@ -64,7 +64,7 @@ export function Gallery({ photos, hasNextPage, isFetchingNextPage, fetchNextPage
             <Button
               key={item.key}
               className="absolute w-[114px] h-[114px] lg:w-[204px] lg:h-[204px] cursor-pointer"
-              onClick={() => handlePhotoClick(photo.urls.full)}
+              onClick={() => handlePhotoClick(photo.urls.regular)}
               style={{
                 transform: `translateY(${item.start}px) translateX(${item.lane * imageSize + 10 * item.lane}px)`,
               }}

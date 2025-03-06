@@ -14,15 +14,18 @@ DONE:
 - add HeadlessUI + Tailwind for ui-kit 
 - add infinite scroll 
 - add virtualized list 
-
-TODO: 
+- add modal
 - add mobile styles 
 - add desktop styles 
-- add lazy loading for photos (make sure there is no jumping on page)
+
+TODO: 
+- fix resizing
 - fix issues with tanstack queries: don't query without button click, reset fetched data when search input cleared
+- fix search bar positioning and animation 
 - handle enter down
-- add modals (with react-router-dom?)
-- refactor (+ check todos at code)
+- handle loadings, errors states
+- add routing
+- refactor (+ check todos at code, fix lint warnings)
 - test 
 - check accessibility 
 - deploy

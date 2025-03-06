@@ -46,6 +46,7 @@ export function SearchPage(): ReactNode {
     //refetch();
   }
 
+  //TODO: not only url, but complete photo object
   const [chosenPhotoUrl, setChosenPhotoUrl] = useState('');
 
   function handlePhotoClick(url: string) {
@@ -98,7 +99,7 @@ export function SearchPage(): ReactNode {
             />
             <UIDialog isOpen={!!chosenPhotoUrl} handleClose={() => handlePhotoClick('')}>
               <div>
-                <img src={chosenPhotoUrl} alt="chosen" />
+                <img className="max-w-[100vw] max-h-[100vh]" src={chosenPhotoUrl} alt="chosen" />
               </div>
             </UIDialog>
           </>
