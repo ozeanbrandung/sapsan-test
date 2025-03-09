@@ -19,7 +19,7 @@ export function SearchPage(): ReactNode {
     setSearchValue(e.target.value);
   }
 
-  const { status, data, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage, refetch } = useInfiniteQuery({
+  const { /*status, */data, isFetching, isFetchingNextPage, fetchNextPage, hasNextPage, refetch } = useInfiniteQuery({
     queryKey: ['photos', currentQuery],
     queryFn: (ctx) => unsplashServie.searchPhotos(currentQuery, ctx.pageParam),
     getNextPageParam: (lastPage, allPages) => {
