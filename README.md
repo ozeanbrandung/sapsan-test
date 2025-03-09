@@ -6,6 +6,8 @@
 - npm i
 - npm run dev
 
+Деплой проекта: https://sapsan-test-eight.vercel.app/
+
 DONE: 
 - fetch unsplash photos on search 
 - add tanstack query 
@@ -21,6 +23,7 @@ DONE:
 - fix resizing
 - fix issues with tanstack queries: don't query without button click, reset fetched data when search input cleared
 - fix search bar positioning and animation 
+- deploy
 
 TODO: 
 - handle loadings, errors states
@@ -30,7 +33,6 @@ TODO:
 - refactor (+ check todos at code, fix lint warnings)
 - test 
 - check accessibility 
-- deploy
 
 # React + TypeScript + Vite
 
