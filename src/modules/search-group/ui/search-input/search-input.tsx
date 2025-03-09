@@ -18,7 +18,12 @@ export function SearchInput(props: ISearchInputProps): ReactNode {
         <SearchIcon />
       </div>
 
-      <UIInput className={clsx('py-[15px] pr-[25px] pl-[36px]', className)} value={value} {...rest} />
+      <UIInput
+        className={clsx('py-[15px] pr-[25px] pl-[36px]', className)}
+        value={value}
+        onKeyDown={(e) => e.key === 'Enter' && e.preventDefault()}
+        {...rest}
+      />
       {!!value && (
         <Button className="absolute right-[12px] top-[12px]" onClick={clearValue}>
           <CrossIcon />

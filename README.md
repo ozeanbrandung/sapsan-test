@@ -17,13 +17,13 @@ DONE:
 - add modal
 - add mobile styles 
 - add desktop styles 
-
-TODO: 
+- handle enter down
 - fix resizing
 - fix issues with tanstack queries: don't query without button click, reset fetched data when search input cleared
+
+TODO: 
 - fix search bar positioning and animation 
-- handle enter down
-- handle loadings, errors states
+- handle loadings, errors statesT
 - add routing
 - refactor (+ check todos at code, fix lint warnings)
 - test 

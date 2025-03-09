@@ -1,7 +1,7 @@
 import { useWindowVirtualizer } from '@tanstack/react-virtual';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IPhoto } from '../../services/unsplash-service';
-import { useWindowSize } from '../../hooks';
+import { useWindowSize } from '../../app';
 import { Button } from '@headlessui/react';
 
 interface IGalleryProps {
@@ -19,8 +19,23 @@ export function Gallery({ photos, hasNextPage, isFetchingNextPage, fetchNextPage
 
   //TODO: make numbers constants
   const isDesktop = width >= 1440;
-  const imageSize = isDesktop ? 204 : 114;
-  const columnsCount = isDesktop ? 6 : 3;
+
+  //const imageSize = isDesktop ? 204 : 114;
+  const [imageSize, setImageSize] = useState(isDesktop ? 204 : 114);
+  const [columnsCount, setColumnsCount] = useState(isDesktop ? 6 : 3);
+  //const columnsCount = isDesktop ? 6 : 3;
+
+  useEffect(() => {
+    if (isDesktop) {
+      setImageSize(204);
+      setColumnsCount(6);
+    } else {
+      setImageSize(114);
+      setColumnsCount(3);
+    }
+  }, [isDesktop]);
+
+  console.log(imageSize);
 
   const virtualizer = useWindowVirtualizer({
     count: hasNextPage ? photos.length + 1 : photos.length,
@@ -29,6 +44,10 @@ export function Gallery({ photos, hasNextPage, isFetchingNextPage, fetchNextPage
     gap: 10,
     lanes: columnsCount,
   });
+
+  useEffect(() => {
+    virtualizer.measure();
+  }, [imageSize, columnsCount]);
 
   useEffect(() => {
     const [lastItem] = [...virtualizer.getVirtualItems()].reverse();
@@ -56,7 +75,7 @@ export function Gallery({ photos, hasNextPage, isFetchingNextPage, fetchNextPage
           const isLoaderRow = item.index > photos.length - 1;
           const photo = photos[item.index];
 
-          //console.log(item);
+          console.log(item.index === 0 && item);
 
           if (!photo) return null;
 

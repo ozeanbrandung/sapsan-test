@@ -57,6 +57,7 @@ class UnsplashService {
   }
 
   async searchPhotos(query: string, page = 1 /*, perPage = 10*/) {
+    //debugger;
     if (!query) {
       throw new Error('Поисковый запрос не может быть пустым');
     }

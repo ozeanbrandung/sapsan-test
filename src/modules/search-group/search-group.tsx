@@ -1,17 +1,16 @@
 import { ReactNode } from 'react';
-import { UIButton } from '../../ui';
 import clsx from 'clsx';
 import { SearchInput } from './ui';
 
 interface ISearchGroupProps {
   searchValue: string;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleSearchBtnClick: () => void;
+  searchBtn: ReactNode;
   className?: string;
   clearSearchValue: () => void;
 }
 export function SearchGroup(props: ISearchGroupProps): ReactNode {
-  const { searchValue, handleInputChange, handleSearchBtnClick, clearSearchValue, className } = props;
+  const { searchValue, handleInputChange, searchBtn, clearSearchValue, className } = props;
   return (
     <form className={clsx('flex justify-center items-center gap-[8px] max-w-[512px] ', className)}>
       {/*TODO: move to json */}
@@ -23,8 +22,7 @@ export function SearchGroup(props: ISearchGroupProps): ReactNode {
         placeholder="Телефоны, яблоки, груши..."
         clearValue={clearSearchValue}
       />
-      {/*TODO: move to json */}
-      <UIButton onClick={handleSearchBtnClick}>Искать</UIButton>
+      {searchBtn}
     </form>
   );
 }
