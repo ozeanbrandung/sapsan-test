@@ -20,9 +20,9 @@ DONE:
 - handle enter down
 - fix resizing
 - fix issues with tanstack queries: don't query without button click, reset fetched data when search input cleared
+- fix search bar positioning and animation 
 
 TODO: 
-- fix search bar positioning and animation 
 - handle loadings, errors states
 - add routing
 - add absolute imports 
