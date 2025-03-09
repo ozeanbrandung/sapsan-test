@@ -23,8 +23,10 @@ DONE:
 
 TODO: 
 - fix search bar positioning and animation 
-- handle loadings, errors statesT
+- handle loadings, errors states
 - add routing
+- add absolute imports 
+- add imports order lint check
 - refactor (+ check todos at code, fix lint warnings)
 - test 
 - check accessibility 

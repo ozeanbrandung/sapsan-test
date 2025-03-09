@@ -67,24 +67,17 @@ export function SearchPage(): ReactNode {
   const isNothingFound = !photos.length && currentQuery && !isFetching; //&& status === 'success' && !isFetching;
   const isSomethingFound = !!photos.length && currentQuery; //&& status === 'success' && !isFetching;
 
-  console.log(status);
+  //console.log(status);
 
   //TODO: check semantic
   return (
     <>
-      <div
-        className={clsx('transition duration-300 ease pb-[16px] pt-[10px] sticky top-0 bg-white z-1', {
-          'translate-y-[232px]': !currentQuery, //&& status === 'success' && !isFetching,
-          'translate-y-0': currentQuery, //|| status === 'error' || status === 'pending' || isFetching,
-        })}
-      >
+      <div className={clsx('transition duration-300 ease pb-[16px] pt-[10px] sticky top-0 bg-white z-1')}>
         <UILayout>
           <SearchGroup
             className={clsx('transition duration-300 ease relative', {
-              'translate-x-[-50%] left-[50%]': true,
-              //TODO: animation
-              //'translate-x-[-50%] left-[50%]': !searchValue,
-              //' translate-x-[0%] left-[0%]': isSomethingFound || isNothingFound,
+              'animate-[var(--animate-to-right)]': !(isSomethingFound || isNothingFound),
+              'animate-[var(--animate-to-left)]': isSomethingFound || isNothingFound,
             })}
             searchValue={searchValue}
             handleInputChange={handleInputChange}
